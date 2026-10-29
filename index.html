@@ -95,6 +95,43 @@
 </head>
 <body class="bg-gsisBg dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen font-sans selection:bg-gsiAccent selection:text-white pt-20 pb-12 transition-colors duration-500">
 
+    <!-- MODAL DE TÉRMINOS Y CONDICIONES (SIEMPRE VISIBLE AL INICIAR) -->
+    <div id="terms-modal" class="fixed inset-0 z-[200] hidden items-center justify-center bg-pink-900/40 dark:bg-black/70 backdrop-blur-sm p-4 transition-opacity duration-500 opacity-0">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-[0_20px_50px_rgba(251,111,146,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-2xl w-full max-h-[85vh] flex flex-col relative border border-pink-100 dark:border-gray-800 overflow-hidden transform scale-95 transition-transform duration-500" id="terms-content">
+            <div class="p-6 border-b border-pink-50 dark:border-gray-800 bg-gsisBg/50 dark:bg-gray-800/50 flex flex-col items-center text-center">
+                <span class="text-3xl mb-2">🎀</span>
+                <h2 class="font-serif text-2xl font-bold text-gray-800 dark:text-white">Bienvenid@ a GSI Makeup</h2>
+                <p class="text-xs text-gsiAccent font-semibold uppercase tracking-widest mt-1">Términos y Condiciones de Uso</p>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto flex-grow custom-scrollbar text-sm text-gray-600 dark:text-gray-300 space-y-4">
+                <p>Al acceder y utilizar el catálogo digital de <strong>GSI Makeup</strong>, aceptas cumplir con los presentes términos. Te pedimos leerlos cuidadosamente.</p>
+                
+                <h3 class="font-bold text-gray-800 dark:text-white text-base pt-2">1. Proceso de Compra y Pagos</h3>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>Nuestro catálogo digital es una herramienta para levantar pedidos. La confirmación, disponibilidad final y el cobro se gestionan directamente a través de nuestro canal oficial de <strong>WhatsApp</strong>.</li>
+                    <li>Los precios mostrados están en pesos mexicanos. Los costos de envío se calcularán al momento de confirmar tu pedido con un asesor.</li>
+                </ul>
+
+                <h3 class="font-bold text-gray-800 dark:text-white text-base pt-2">2. Disponibilidad de Productos</h3>
+                <p>Los precios, descripciones e imágenes pueden cambiar sin previo aviso. La confirmación del stock final se realiza al momento de enviar tu pedido por WhatsApp. En caso de agotarse un producto, te ofreceremos alternativas o el ajuste del total.</p>
+
+                <h3 class="font-bold text-gray-800 dark:text-white text-base pt-2">3. Envíos y Entregas</h3>
+                <p>Realizamos entregas principalmente en CDMX, Estado de México y Querétaro. Los tiempos y métodos de entrega se acordarán de forma personalizada al cerrar tu compra.</p>
+
+                <h3 class="font-bold text-gray-800 dark:text-white text-base pt-2">4. Higiene y Devoluciones</h3>
+                <p>Por estricta higiene y cuidado de la salud de todos nuestros clientes, <strong>no aceptamos cambios ni devoluciones en cosméticos</strong>, productos de <em>skincare</em> o herramientas de maquillaje una vez entregados y abiertos, salvo por defectos de fábrica reportados en las primeras 24 horas.</p>
+
+                <h3 class="font-bold text-gray-800 dark:text-white text-base pt-2">5. Uso de Datos</h3>
+                <p>La información que nos compartas a través de WhatsApp será utilizada única y exclusivamente para la gestión, envío y seguimiento de tu compra, respetando en todo momento tu privacidad.</p>
+            </div>
+            <div class="p-6 border-t border-pink-50 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 flex justify-center">
+                <button onclick="window.aceptarTerminos()" class="bg-gradient-to-r from-pink-400 to-gsiAccent text-white px-10 py-3.5 rounded-full shadow-[0_8px_20px_rgb(251,111,146,0.4)] hover:scale-105 transition-transform duration-300 font-bold text-sm tracking-wide flex items-center gap-2">
+                    <span>✨ Acepto los Términos y Condiciones</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- BARRA SUPERIOR FIJA -->
     <div class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm border-b border-pink-100 dark:border-gray-800 px-6 py-3 flex justify-between items-center transition-all duration-500">
         <div class="flex items-center gap-2 md:gap-2.5">
@@ -135,9 +172,9 @@
                 <h2 class="text-2xl md:text-3xl font-serif font-bold text-gsiAccent mb-3">Tu nuevo imperdible de belleza en línea</h2>
                 <p class="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-sm leading-relaxed">
                     Productos de belleza de las mejores marcas a precios accesibles y de calidad.<br>
-                    <span class="inline-block mt-2 font-bold text-gsiDarkPink dark:text-pink-400 bg-pink-50 dark:bg-gray-900 px-4 py-1.5 rounded-full border border-pink-100 dark:border-gray-700 shadow-sm">
-                        📍 Envíos disponibles: CDMX - EDO DE MÉXICO Y QUERÉTARO
-                    </span><br>
+                    <button onclick="window.abrirModalUbicaciones()" class="inline-block mt-2 font-bold text-gsiDarkPink dark:text-pink-400 bg-pink-50 dark:bg-gray-900 px-4 py-1.5 rounded-full border border-pink-200 dark:border-gray-700 shadow-md hover:scale-105 hover:bg-pink-100 transition-all cursor-pointer animate-pulse">
+    📍 Envíos disponibles: CDMX - EDO DE MÉXICO Y QUERÉTARO (Ver Puntos ✨)
+                    </button>
                     <span class="text-[11px] text-gray-400 dark:text-gray-500 mt-3 block tracking-widest uppercase font-semibold">Pedidos a través del link | #GSICOSMETICS</span>
                 </p>
             </div>
@@ -186,7 +223,7 @@
                 <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                     <span class="text-gray-400 text-lg">🔍</span>
                 </div>
-                <input type="text" id="buscador" onkeyup="window.buscarProducto(this.value)" placeholder="Buscar en el catálogo..." class="w-full pl-14 pr-4 py-4 rounded-3xl border-2 border-pink-100 dark:border-gray-700 focus:border-gsiAccent focus:ring-4 focus:ring-pink-50 dark:focus:ring-pink-900/30 outline-none transition-all shadow-sm bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white backdrop-blur-sm font-medium">
+                <input type="text" id="buscador" onkeyup="window.buscarProducto(this.value)" placeholder="Buscador" class="w-full pl-14 pr-4 py-4 rounded-3xl border-2 border-pink-100 dark:border-gray-700 focus:border-gsiAccent focus:ring-4 focus:ring-pink-50 dark:focus:ring-pink-900/30 outline-none transition-all shadow-sm bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white backdrop-blur-sm font-medium">
             </div>
             
             <div class="w-full md:w-1/3 relative">
@@ -211,22 +248,89 @@
             </div>
         </div>
 
-        <!-- FILTRO DE MARCAS HORIZONTAL -->
-        <div id="brand-filters" class="flex overflow-x-auto justify-start md:justify-center gap-3 mb-10 pb-4 hide-scrollbar px-2 opacity-90 scale-95"></div>
+        <!-- CONTENEDOR DE MARCAS CON FLECHAS -->
+        <div class="relative w-full max-w-6xl mx-auto mb-10 px-2 group">
+            <!-- Flecha Izquierda -->
+            <button type="button" onclick="window.scrollMarcas(-350)" class="absolute left-0 top-[35%] -translate-y-1/2 z-10 bg-white/95 dark:bg-gray-800/95 text-gsiAccent rounded-full shadow-[0_4px_15px_rgba(251,111,146,0.4)] hover:shadow-[0_4px_20px_rgba(251,111,146,0.6)] hover:scale-110 transition-all hidden md:flex items-center justify-center h-10 w-10 border-2 border-pink-200 dark:border-gray-700 backdrop-blur-md cursor-pointer group-hover:opacity-100">
+                <svg class="w-5 h-5 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            
+            <!-- FILTRO DE MARCAS HORIZONTAL -->
+            <div id="brand-filters" class="flex overflow-x-auto justify-start gap-3 pb-4 hide-scrollbar px-8 opacity-95 scale-95 scroll-smooth snap-x"></div>
+
+            <!-- Flecha Derecha -->
+            <button type="button" onclick="window.scrollMarcas(350)" class="absolute right-0 top-[35%] -translate-y-1/2 z-10 bg-white/95 dark:bg-gray-800/95 text-gsiAccent rounded-full shadow-[0_4px_15px_rgba(251,111,146,0.4)] hover:shadow-[0_4px_20px_rgba(251,111,146,0.6)] hover:scale-110 transition-all hidden md:flex items-center justify-center h-10 w-10 border-2 border-pink-200 dark:border-gray-700 backdrop-blur-md cursor-pointer group-hover:opacity-100">
+                <svg class="w-5 h-5 mr-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
 
         <!-- CONTENEDOR DINÁMICO -->
         <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold">Sincronizando inventario... 💄✨</p>
+            <p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold">Cargando catálogo... 💄✨</p>
+        </div>
+
+        <!-- CUADRO FIJO DE TÉRMINOS Y CONDICIONES (ACORDEÓN) -->
+        <div class="max-w-4xl mx-auto mt-12 mb-8 px-4">
+            <details class="group bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-pink-100 dark:border-gray-700 rounded-3xl shadow-sm transition-all duration-300">
+                <summary class="flex justify-between items-center cursor-pointer p-6 font-serif font-bold text-gray-700 dark:text-gray-200 hover:text-gsiAccent transition-colors list-none outline-none">
+                    <span class="flex items-center gap-3"><span class="text-2xl">📜</span> Leer Términos y Condiciones</span>
+                    <span class="text-pink-400 group-open:rotate-180 transition-transform duration-300 text-lg">▼</span>
+                </summary>
+                <div class="p-6 pt-2 text-sm text-gray-600 dark:text-gray-300 space-y-4 border-t border-pink-50 dark:border-gray-700 mt-2 bg-gsisBg/30 dark:bg-gray-900/30 rounded-b-3xl">
+                    <p><strong>1. Compras por WhatsApp:</strong> Nuestro catálogo digital facilita tu selección de productos. La confirmación, disponibilidad final y cobro se gestionan directamente con un asesor por nuestro WhatsApp oficial.</p>
+                    <p><strong>2. Precios y Envíos:</strong> Los precios están en pesos mexicanos (MXN). Los costos y tiempos de envío se calculan al cerrar tu pedido (contamos con entregas en CDMX, Estado de México y Querétaro).</p>
+                    <p><strong>3. Políticas de Higiene:</strong> Por tu seguridad y salud, <strong>no aceptamos cambios ni devoluciones</strong> en cosméticos, productos de cuidado facial o herramientas abiertas/entregadas, salvo por defectos de fábrica reportados en las primeras 24 horas.</p>
+                    <p><strong>4. Actualización de Catálogo:</strong> Las imágenes son ilustrativas. Los precios y el stock pueden variar sin previo aviso según la disponibilidad de nuestros proveedores.</p>
+                    <p><strong>5. Uso de Datos:</strong> La información que nos compartas a través de WhatsApp será utilizada única y exclusivamente para la gestión, envío y seguimiento de tu compra, respetando en todo momento tu privacidad.</p>
+                </div>
+            </details>
         </div>
 
     </main>
 
     <!-- FOOTER -->
-    <footer class="mt-16 text-center text-gray-500 dark:text-gray-400 text-sm pb-10 transition-colors duration-500">
+    <footer class="mt-8 text-center text-gray-500 dark:text-gray-400 text-sm pb-10 transition-colors duration-500">
         <p>Catálogo Digital Creado Exclusivamente para <strong>GSI Makeup</strong></p>
         <p>Precios sujetos a disponibilidad.</p>
+        <button onclick="window.verificarTerminos()" class="mt-4 text-xs font-semibold text-gsiAccent hover:text-pink-500 underline underline-offset-2 transition-colors">Ver Aviso Legal Completo</button>
     </footer>
+    <!-- MODAL DE UBICACIONES / PUNTOS DE ENTREGA -->
+    <div id="ubicaciones-modal" class="fixed inset-0 z-[150] hidden items-center justify-center bg-pink-900/40 dark:bg-black/80 backdrop-blur-sm transition-opacity p-4 opacity-0" onclick="window.cerrarModalUbicaciones()">
+        <div class="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl max-w-xl w-full max-h-[85vh] flex flex-col relative transform scale-95 transition-transform duration-300 overflow-hidden border border-pink-100 dark:border-gray-700" id="ubicaciones-content" onclick="event.stopPropagation()">
+            
+            <!-- Encabezado Cute -->
+            <div class="p-6 border-b border-pink-50 dark:border-gray-700 flex items-center justify-between bg-pink-50/50 dark:bg-gray-800/50">
+                <div class="flex items-center gap-2">
+                    <span class="text-2xl">📍</span>
+                    <h2 class="font-serif text-2xl font-bold text-gray-800 dark:text-white">Puntos de Entrega</h2>
+                </div>
+                <button onclick="window.cerrarModalUbicaciones()" class="text-gray-400 hover:text-gsiAccent dark:hover:text-pink-400 transition-colors bg-white dark:bg-gray-800 p-2 rounded-full shadow-sm border border-gray-100 dark:border-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <!-- Contenedor con Scroll para las Imágenes -->
+            <div class="p-6 overflow-y-auto flex-grow custom-scrollbar space-y-6 bg-gsisBg/20 dark:bg-gray-900/20">
+                <!-- 1. Querétaro -->
+                <div class="rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-gray-700 bg-white">
+                    <img src="PUNTOS QUERETARO.jpeg" alt="Puntos de entrega Querétaro" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <!-- 2. CDMX -->
+                <div class="rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-gray-700 bg-white">
+                    <img src="PUNTOS CDMX.jpeg" alt="Puntos de entrega CDMX" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+                <!-- 3. EDOMEX -->
+                <div class="rounded-2xl overflow-hidden shadow-md border border-pink-100 dark:border-gray-700 bg-white">
+                    <img src="PUNTOS EDOMEX.jpeg" alt="Puntos de entrega Estado de México" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-500">
+                </div>
+            </div>
 
+            <!-- Pie del Modal -->
+            <div class="p-5 border-t border-pink-50 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-center">
+                <p class="text-xs text-gsiAccent dark:text-pink-400 font-bold uppercase tracking-widest">Acuerda tu entrega por WhatsApp al finalizar tu pedido ✨</p>
+            </div>
+        </div>
+    </div>
     <!-- MODAL PRODUCTO -->
     <div id="product-modal" class="fixed inset-0 z-[110] hidden items-center justify-center bg-black/60 dark:bg-black/80 backdrop-blur-sm transition-opacity p-4" onclick="window.cerrarModalProducto()">
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col relative transform scale-95 transition-transform duration-300 overflow-hidden" id="product-modal-content" onclick="event.stopPropagation()">
@@ -388,10 +492,17 @@
             marcaActiva = String(marca).replace(/&#39;/g, "'");
             window.renderizarVista();
         }
+        
+        window.scrollMarcas = function(distancia) {
+            const contenedor = document.getElementById('brand-filters');
+            if(contenedor) {
+                contenedor.scrollLeft += distancia;
+            }
+        }
 
         window.renderizarVista = function() {
             const grid = document.getElementById('productos-grid');
-            grid.innerHTML = '<p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold text-lg">Organizando catálogo... ✨</p>';
+            grid.innerHTML = '<p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold text-lg">Cargando catálogo... ✨</p>';
 
             setTimeout(() => {
                 try {
@@ -597,9 +708,14 @@
                     "YUYA": "YUYA", "MAQUIMEX": "MAQUIMEX", "RUSH MAGIC": "RUSH MAGIC"
                 };
 
-                querySnapshot.forEach((doc) => {
+                    querySnapshot.forEach((doc) => {
                     try {
                         let prod = doc.data();
+                        
+                        // 🛑 NUEVO FILTRO: Ignorar productos sin precio o con valor de $0.00
+                        if (!prod.precio_menudeo || Number(prod.precio_menudeo) <= 0) {
+                            return; // Salta este producto y no lo guarda en la memoria
+                        }
                         
                         let marcaOriginal = String(prod.marca || "OTRA").toUpperCase().trim();
                         if (marcaOriginal === "BISSU") marcaOriginal = "BISSÚ";
@@ -911,6 +1027,71 @@
             mensaje += `\n*Total Estimado: $${total.toFixed(2)}*\nQuedo a la espera de la confirmación. ¡Gracias!`;
             window.open(`https://api.whatsapp.com/send?phone=${telefono}&text=${encodeURIComponent(mensaje)}`, '_blank');
         }
+        
+        // ==========================================
+        // CONTROL DEL MODAL DE UBICACIONES
+        // ==========================================
+        window.abrirModalUbicaciones = function() {
+            const modal = document.getElementById('ubicaciones-modal');
+            const content = document.getElementById('ubicaciones-content');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        };
+
+        window.cerrarModalUbicaciones = function() {
+            const modal = document.getElementById('ubicaciones-modal');
+            const content = document.getElementById('ubicaciones-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        };
+
+        // ==========================================
+        // CONTROL DE TÉRMINOS Y CONDICIONES (MODAL - SIEMPRE VISIBLE AL INICIAR)
+        // ==========================================
+        window.verificarTerminos = function() {
+            const modal = document.getElementById('terms-modal');
+            const content = document.getElementById('terms-content');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 50);
+        };
+
+        window.aceptarTerminos = function() {
+            const modal = document.getElementById('terms-modal');
+            const content = document.getElementById('terms-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 500);
+        };
+
+        // Mostrar el cuadro 1 segundo después de entrar a la página (siempre)
+        setTimeout(window.verificarTerminos, 1000);
 
         descargarDatos();
     </script>
