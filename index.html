@@ -169,13 +169,13 @@
         <!-- PESTAÑAS DE GRUPOS COMERCIALES -->
         <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
             <button id="tab-basicos" onclick="window.cambiarGrupo('basicos')" class="tab-btn tab-active px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-md">
-                💄 Básicos (Alta Rotación)
+                💄 Básicos 
             </button>
             <button id="tab-profesional" onclick="window.cambiarGrupo('profesional')" class="tab-btn tab-inactive px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-sm">
-                ✨ Profesional (Gama Media)
+                ✨ Profesional 
             </button>
             <button id="tab-skincare" onclick="window.cambiarGrupo('skincare')" class="tab-btn tab-inactive px-6 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-sm">
-                🌿 Skincare & Capilar
+                🌿 Trendy
             </button>
         </div>
 
@@ -186,7 +186,7 @@
                 <div class="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
                     <span class="text-gray-400 text-lg">🔍</span>
                 </div>
-                <input type="text" id="buscador" onkeyup="window.buscarProducto(this.value)" placeholder="Buscar en todo el catálogo (labial, marca, SKU)..." class="w-full pl-14 pr-4 py-4 rounded-3xl border-2 border-pink-100 dark:border-gray-700 focus:border-gsiAccent focus:ring-4 focus:ring-pink-50 dark:focus:ring-pink-900/30 outline-none transition-all shadow-sm bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white backdrop-blur-sm font-medium">
+                <input type="text" id="buscador" onkeyup="window.buscarProducto(this.value)" placeholder="Buscar en el catálogo..." class="w-full pl-14 pr-4 py-4 rounded-3xl border-2 border-pink-100 dark:border-gray-700 focus:border-gsiAccent focus:ring-4 focus:ring-pink-50 dark:focus:ring-pink-900/30 outline-none transition-all shadow-sm bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white backdrop-blur-sm font-medium">
             </div>
             
             <div class="w-full md:w-1/3 relative">
@@ -216,7 +216,7 @@
 
         <!-- CONTENEDOR DINÁMICO -->
         <div id="productos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold">Sincronizando inventario masivo... 💄✨</p>
+            <p class="text-center w-full col-span-full text-gsiAccent animate-pulse py-10 font-semibold">Sincronizando inventario... 💄✨</p>
         </div>
 
     </main>
