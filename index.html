@@ -388,10 +388,11 @@
         </div>
     </div>
 
-    <!-- SCRIPT FIREBASE Y LÓGICA -->
+<!-- SCRIPT FIREBASE Y LÓGICA -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js"; // ⬅️ LÍNEA AGREGADA
       
         const firebaseConfig = {
           apiKey: "AIzaSyCLfixfbzQ66OxH2pvWWjZqv7Qq1CmxMPg",
@@ -405,6 +406,7 @@
       
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const analytics = getAnalytics(app); // ⬅️ LÍNEA AGREGADA QUE ENCIENDE EL RASTREADOR
 
         let carrito = JSON.parse(localStorage.getItem('gsi_carrito')) || [];
         let productoActualModal = null;
@@ -690,8 +692,24 @@
             }, 20);
         }
 
-        async function descargarDatos() {
+async function descargarDatos() {
             try {
+                // 1. VERIFICAR CACHÉ (Memoria Inteligente del Navegador)
+                const cacheData = localStorage.getItem('gsi_catalogo_cache');
+                const cacheTime = localStorage.getItem('gsi_catalogo_timestamp');
+                const TIEMPO_EXPIRACION = 6 * 60 * 60 * 1000; // 6 horas en milisegundos
+
+                // Si el caché existe y tiene menos de 6 horas, cargar desde ahí
+                if (cacheData && cacheTime && (Date.now() - parseInt(cacheTime) < TIEMPO_EXPIRACION)) {
+                    console.log("Cargando desde memoria caché (0 lecturas a Firebase) ⚡");
+                    todosLosProductos = JSON.parse(cacheData);
+                    window.renderizarVista();
+                    window.actualizarContadorCarrito();
+                    return; // Salimos de la función sin tocar el servidor
+                }
+
+                console.log("Descargando desde Firebase (Caché vacío o expirado) ☁️");
+                // 2. SI NO HAY CACHÉ VÁLIDO, DESCARGAR DE FIREBASE
                 const querySnapshot = await getDocs(collection(db, "productos"));
                 
                 const diccionarioMarcas = {
@@ -708,13 +726,13 @@
                     "YUYA": "YUYA", "MAQUIMEX": "MAQUIMEX", "RUSH MAGIC": "RUSH MAGIC"
                 };
 
-                    querySnapshot.forEach((doc) => {
+                querySnapshot.forEach((doc) => {
                     try {
                         let prod = doc.data();
                         
-                        // 🛑 NUEVO FILTRO: Ignorar productos sin precio o con valor de $0.00
+                        // 🛑 FILTRO DE PRECIOS: Ignorar productos sin precio o con valor de $0.00
                         if (!prod.precio_menudeo || Number(prod.precio_menudeo) <= 0) {
-                            return; // Salta este producto y no lo guarda en la memoria
+                            return; 
                         }
                         
                         let marcaOriginal = String(prod.marca || "OTRA").toUpperCase().trim();
@@ -741,6 +759,10 @@
                     }
                 });
                 
+                // 3. GUARDAR EL RESULTADO EN LA MEMORIA CACHÉ PARA FUTURAS VISITAS
+                localStorage.setItem('gsi_catalogo_cache', JSON.stringify(todosLosProductos));
+                localStorage.setItem('gsi_catalogo_timestamp', Date.now().toString());
+                
                 window.renderizarVista();
                 window.actualizarContadorCarrito();
             } catch (error) {
@@ -748,7 +770,6 @@
                 document.getElementById('productos-grid').innerHTML = '<p class="text-center w-full col-span-full text-red-500 py-10 font-semibold text-lg">Error conectando con el servidor. Revisa tu internet o la consola.</p>';
             }
         }
-
         window.actualizarContadorCarrito = function() {
             const totalPiezas = carrito.reduce((acc, item) => acc + item.cantidad, 0);
             document.getElementById('cart-counter').textContent = totalPiezas;
