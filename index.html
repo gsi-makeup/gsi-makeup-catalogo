@@ -590,7 +590,7 @@
                     productosFinales.forEach(prod => {
                         const pMayoreo = prod.precio_mayoreo ? Number(prod.precio_mayoreo).toFixed(2) : "0.00";
                         const pMenudeo = prod.precio_menudeo ? Number(prod.precio_menudeo).toFixed(2) : "0.00";
-                    
+                        const pStock = prod.stock || 'Disponible'; // ✨
                         const pMarca = prod.marca || 'GSI';
                         
                         let tonosHtml = '';
