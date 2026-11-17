@@ -629,7 +629,7 @@
                             <div class="mt-2 mb-3 relative">
                                 <details class="w-full group">
                                     <summary class="list-none text-xs text-gray-700 dark:text-gray-200 bg-[#fdf2f8] dark:bg-gray-700 border border-pink-200 dark:border-gray-600 rounded-md p-2 outline-none cursor-pointer flex justify-between items-center font-medium hover:border-gsiAccent transition-colors">
-                                        <span>🎨 Ver ${prod.tonos_detalle.length} tonos</span>
+                                        <span>🎨 Ver ${prod.tonos_detalle.length} productos</span>
                                         <span class="text-[10px] text-pink-500 group-open:rotate-180 transition-transform">▼</span>
                                     </summary>
                                     <div class="absolute z-30 w-full mt-1 bg-white dark:bg-gray-800 border border-pink-200 dark:border-gray-600 rounded-lg shadow-xl max-h-40 overflow-y-auto">
@@ -638,7 +638,7 @@
                                 </details>
                             </div>`;
                         } else {
-                            tonosHtml = `<div class="mt-2 mb-3"><p class="text-[11px] text-gray-400 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-md p-2 text-center italic">Tono único / Estándar</p></div>`;
+                            tonosHtml = `<div class="mt-2 mb-3"><p class="text-[11px] text-gray-400 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 rounded-md p-2 text-center italic">Producto único / Estándar</p></div>`;
                         }
                         
                         const prodEncoded = encodeURIComponent(JSON.stringify(prod)).replace(/'/g, "%27");
