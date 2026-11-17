@@ -418,15 +418,7 @@
         
         window.mostrarMayoreo = false; 
 
-        const TODAS_LAS_MARCAS = [
-            "ADARA", "AIZA COSMÉTICOS", "AMOR US", "ANANDA", "ANI-K MAKEUP", "ARANTZA", 
-            "ATENEA", "AYVANNA RÊVER", "BAUSSE", "BEAU VISAGE", "BEAUTY CREATIONS", 
-            "BRINGGREEN", "BISSÚ", "BY APPLE", "CÉLAVI", "COLORGRAM", "CHASIN' RABBITS", 
-            "CLOUDSKIN", "DAPOP", "HOT FOCUS DELUXE", "IONI", "ITALIA DELUXE", "KARA BEAUTY", 
-            "KIMCHI CHIC", "KÜÜL COLOR SYSTEM", "KUTE", "MADAGASCAR CENTELLA", "MC BEAUTY", 
-            "MIXSOON", "MOIRA", "NEKANE CAPILAR", "OS CXLXURS", "PINK UP", "PROSA", "SANIYE", 
-            "SINLESS BEAUTY", "TOCOBO", "TRUEMAKEUP", "XIOMARA PROFESIONAL", "YUYA"
-        ];
+
 
         window.toggleMayoreo = function() {
             window.mostrarMayoreo = !window.mostrarMayoreo;
@@ -549,7 +541,8 @@
 
                     let marcasFlotantesBuffer = [`<button onclick="window.seleccionarMarcaFlotante('Todas')" class="col-span-2 md:col-span-3 bg-gradient-to-r from-pink-50 to-white dark:from-gray-800 dark:to-gray-700 text-gsiAccent dark:text-pink-300 py-3.5 rounded-2xl font-serif italic font-bold border border-pink-200 dark:border-gray-600 hover:border-pink-400 hover:shadow-md transition-all shadow-sm flex items-center justify-center gap-2 mb-2"><span class="text-lg">✨</span> Mostrar Todo el Catálogo <span class="text-lg">✨</span></button>`];
                     
-                    TODAS_LAS_MARCAS.forEach((marca, index) => {
+                    const TODAS_LAS_MARCAS_DINAMICAS = [...new Set(productosPermitidos.map(p => p.marca || 'Otra'))].sort();
+                    TODAS_LAS_MARCAS_DINAMICAS.forEach((marca, index) => {
                         const isActive = marcaActiva === marca;
                         const safeMarcaName = String(marca).replace(/'/g, "&#39;");
                         const estiloElegido = estilosMosaico[index % estilosMosaico.length];
@@ -726,6 +719,26 @@ async function descargarDatos() {
                     "YUYA": "YUYA", "MAQUIMEX": "MAQUIMEX", "RUSH MAGIC": "RUSH MAGIC"
                 };
 
+                // ✨ NUEVO: MAPA MAESTRO DE GAMAS 
+                // Forza a las marcas a ir a su grupo sin importar lo que diga la base de datos vieja
+                const mapaGrupos = {
+                    "BY APPLE": "basicos", "SANIYE": "basicos", "DAPOP": "basicos", "CÉLAVI": "basicos", 
+                    "BAUSSE": "basicos", "AIZA COSMÉTICOS": "basicos", "MC BEAUTY": "basicos", "PROSA": "basicos", 
+                    "ANANDA": "basicos", "MAQUIMEX": "basicos",
+                    
+                    "BEAUTY CREATIONS": "profesional", "BISSÚ": "profesional", "ADARA": "profesional", 
+                    "AMOR US": "profesional", "BEAU VISAGE": "profesional", "MOIRA": "profesional", 
+                    "KIMCHI CHIC": "profesional", "KARA BEAUTY": "profesional", "ATENEA": "profesional", 
+                    "ARANTZA": "profesional", "ANI-K MAKEUP": "profesional", "ITALIA DELUXE": "profesional",
+                    "AYVANNA RÊVER": "profesional", "TRUEMAKEUP": "profesional", "SINLESS BEAUTY": "profesional", 
+                    "PINK UP": "profesional", "YUYA": "profesional", "OS CXLXURS": "profesional", "RUSH MAGIC": "profesional",
+                    
+                    "MIXSOON": "skincare", "MADAGASCAR CENTELLA": "skincare", "BRINGGREEN": "skincare", 
+                    "COLORGRAM": "skincare", "IONI": "skincare", "CLOUDSKIN": "skincare", "NEKANE CAPILAR": "skincare", 
+                    "KÜÜL COLOR SYSTEM": "skincare", "XIOMARA PROFESIONAL": "skincare", "KUTE": "skincare", 
+                    "TOCOBO": "skincare", "HOT FOCUS DELUXE": "skincare", "CHASIN' RABBITS": "skincare"
+                };
+
                 querySnapshot.forEach((doc) => {
                     try {
                         let prod = doc.data();
@@ -753,6 +766,9 @@ async function descargarDatos() {
                             }
                         }
                         
+                        // ✨ APLICAR EL MAPA MAESTRO (Sobrescribe errores de Firebase)
+                        prod.grupo = mapaGrupos[prod.marca] || String(prod.grupo || 'basicos').toLowerCase().trim();
+
                         todosLosProductos.push(prod);
                     } catch(err) {
                         console.warn("Producto omitido por error de formato en Firebase", err);
