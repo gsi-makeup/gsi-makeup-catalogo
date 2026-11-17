@@ -719,8 +719,7 @@ async function descargarDatos() {
                     "YUYA": "YUYA", "MAQUIMEX": "MAQUIMEX", "RUSH MAGIC": "RUSH MAGIC"
                 };
 
-                // ✨ NUEVO: MAPA MAESTRO DE GAMAS 
-                // Forza a las marcas a ir a su grupo sin importar lo que diga la base de datos vieja
+                // MAPA MAESTRO DE GAMAS 
                 const mapaGrupos = {
                     "BY APPLE": "basicos", "SANIYE": "basicos", "DAPOP": "basicos", "CÉLAVI": "basicos", 
                     "BAUSSE": "basicos", "AIZA COSMÉTICOS": "basicos", "MC BEAUTY": "basicos", "PROSA": "basicos", 
@@ -739,6 +738,9 @@ async function descargarDatos() {
                     "TOCOBO": "skincare", "HOT FOCUS DELUXE": "skincare", "CHASIN' RABBITS": "skincare"
                 };
 
+                // ✨ NUEVO: MEMORIA PARA EVITAR DUPLICADOS POR NOMBRE
+                const nombresVistos = new Set();
+
                 querySnapshot.forEach((doc) => {
                     try {
                         let prod = doc.data();
@@ -747,6 +749,16 @@ async function descargarDatos() {
                         if (!prod.precio_menudeo || Number(prod.precio_menudeo) <= 0) {
                             return; 
                         }
+
+                        // ✨ FILTRO ANTI-DUPLICADOS: Normalizamos el nombre (mayúsculas y sin espacios inútiles)
+                        let nombreParaFiltro = String(prod.nombre || "").toUpperCase().trim();
+                        
+                        // Si ya vimos este nombre, lo ignoramos y pasamos al siguiente
+                        if (nombresVistos.has(nombreParaFiltro)) {
+                            return;
+                        }
+                        // Si es nuevo, lo guardamos en la memoria para que el siguiente clon sea bloqueado
+                        nombresVistos.add(nombreParaFiltro);
                         
                         let marcaOriginal = String(prod.marca || "OTRA").toUpperCase().trim();
                         if (marcaOriginal === "BISSU") marcaOriginal = "BISSÚ";
@@ -766,7 +778,7 @@ async function descargarDatos() {
                             }
                         }
                         
-                        // ✨ APLICAR EL MAPA MAESTRO (Sobrescribe errores de Firebase)
+                        // APLICAR EL MAPA MAESTRO
                         prod.grupo = mapaGrupos[prod.marca] || String(prod.grupo || 'basicos').toLowerCase().trim();
 
                         todosLosProductos.push(prod);
