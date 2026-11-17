@@ -132,22 +132,35 @@
         </div>
     </div>
 
-        <!-- BARRA SUPERIOR FIJA -->
+<!-- BARRA SUPERIOR FIJA -->
     <div class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm border-b border-pink-100 dark:border-gray-800 px-6 py-3 flex justify-between items-center transition-all duration-500">
-        <div class="flex items-center gap-2 md:gap-2.5">
+        
+        <!-- Izquierda: Luna y Títulos -->
+        <div class="flex items-center gap-2 md:gap-2.5 w-1/3">
             <!-- BOTÓN SECRETO DE MAYOREO EN LA LUNA -->
             <span onclick="window.toggleMayoreo()" class="text-2xl animate-bounce cursor-pointer hover:scale-110 transition-transform select-none" title="Modo Especial">🌙</span>
             
             <span class="font-serif font-bold tracking-wide text-lg text-gray-800 dark:text-white hidden xs:inline">GSI Makeup</span>
-            <span class="text-xs text-gsiAccent uppercase font-sans tracking-widest bg-pink-50 dark:bg-gray-800 px-2 py-1 rounded-full border border-pink-200 dark:border-gray-700 hidden sm:inline-block">Catálogo</span>
+            <span class="text-xs text-gsiAccent uppercase font-sans tracking-widest bg-pink-50 dark:bg-gray-800 px-2 py-1 rounded-full border border-pink-200 dark:border-gray-700 hidden lg:inline-block">Catálogo</span>
         </div>
-        <button onclick="window.abrirCarrito()" class="bg-gradient-to-r from-pink-400 to-gsiAccent text-white px-5 py-2.5 rounded-full shadow-md hover:opacity-95 transition-all flex items-center gap-2.5 font-semibold text-sm group">
-            <span class="text-lg group-hover:scale-110 transition-transform">🛍️✨</span>
-            <span class="hidden sm:inline">Mi Carrito</span>
-            <span id="cart-counter" class="bg-white text-gsiAccent dark:bg-gray-900 dark:text-pink-400 text-xs px-2 py-0.5 rounded-full font-bold shadow-inner">0</span>
-        </button>
-    </div>
 
+        <!-- Centro: Botón de Volver a Inicio -->
+        <div class="flex justify-center w-1/3">
+            <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" class="flex items-center gap-2 bg-pink-50 dark:bg-pink-900/30 text-gsiAccent dark:text-pink-300 px-4 md:px-6 py-2 rounded-full border border-pink-300 dark:border-pink-600 shadow-sm hover:shadow-md hover:bg-pink-100 dark:hover:bg-pink-900/50 hover:-translate-y-0.5 transition-all duration-300 font-bold text-xs md:text-sm uppercase tracking-widest group">
+                <span class="group-hover:-translate-y-1 transition-transform duration-300">⬆️</span>
+                <span class="hidden sm:inline">Regresar a Inicio</span>
+            </button>
+        </div>
+
+        <!-- Derecha: Carrito -->
+        <div class="flex justify-end w-1/3">
+            <button onclick="window.abrirCarrito()" class="bg-gradient-to-r from-pink-400 to-gsiAccent text-white px-5 py-2.5 rounded-full shadow-md hover:opacity-95 hover:scale-105 transition-all flex items-center gap-2.5 font-semibold text-sm group">
+                <span class="text-lg group-hover:rotate-12 transition-transform">🛍️✨</span>
+                <span class="hidden lg:inline">Mi Carrito</span>
+                <span id="cart-counter" class="bg-white text-gsiAccent dark:bg-gray-900 dark:text-pink-400 text-xs px-2 py-0.5 rounded-full font-bold shadow-inner">0</span>
+            </button>
+        </div>
+    </div>
     <!-- ENCABEZADO Y LOGOS -->
     <header class="bg-[#F5EAE0] dark:bg-[#0a0a0a] py-6 shadow-sm relative overflow-hidden mb-8 transition-colors duration-500">
         <div class="container mx-auto px-4 flex flex-col items-center justify-center">
@@ -175,7 +188,7 @@
                     <button onclick="window.abrirModalUbicaciones()" class="inline-block mt-2 font-bold text-gsiDarkPink dark:text-pink-400 bg-pink-50 dark:bg-gray-900 px-4 py-1.5 rounded-full border border-pink-200 dark:border-gray-700 shadow-md hover:scale-105 hover:bg-pink-100 transition-all cursor-pointer animate-pulse">
     📍 Envíos disponibles: CDMX - EDO DE MÉXICO Y QUERÉTARO (Ver Puntos ✨)
                     </button>
-                    <span class="text-[11px] text-gray-400 dark:text-gray-500 mt-3 block tracking-widest uppercase font-semibold">Costos de entrega desde $70.00 MXN</span>
+                    <span class="text-base md:text-lg text-gsiAccent dark:text-pink-400 mt-4 block tracking-wider uppercase font-extrabold drop-shadow-sm">🚚 Costos de entrega desde $70.00 MXN ✨</span>
                 </p>
             </div>
             
