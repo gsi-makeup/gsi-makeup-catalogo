@@ -400,6 +400,26 @@
             </div>
         </div>
     </div>
+    
+<!-- MODAL VISOR DE IMAGEN (ZOOM CUTE Y NÍTIDO) -->
+    <div id="image-zoom-modal" class="fixed inset-0 z-[300] hidden items-center justify-center bg-pink-950/60 dark:bg-black/80 backdrop-blur-md transition-opacity p-4 opacity-0" onclick="window.cerrarZoomImagen()">
+        
+        <!-- Contenedor dinámico (w-auto): abraza la foto para que crezca al máximo posible sin perder resolución -->
+        <div class="relative w-auto max-w-[95vw] md:max-w-[70vw] flex items-center justify-center transform scale-95 transition-transform duration-300" id="image-zoom-content" onclick="event.stopPropagation()">
+            
+            <!-- Botón Cerrar Flotante (X) -->
+            <button onclick="window.cerrarZoomImagen()" class="absolute -top-3 -right-3 md:-top-5 md:-right-5 bg-white dark:bg-gray-800 text-pink-400 hover:text-white hover:bg-gsiAccent dark:hover:bg-pink-500 p-2 md:p-2.5 rounded-full shadow-[0_4px_15px_rgba(251,111,146,0.4)] transition-all z-20 border-2 border-pink-100 dark:border-gray-700 hover:scale-110">
+                <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            
+            <!-- Caja blanca adaptativa -->
+            <div class="bg-white dark:bg-gray-900 p-2 md:p-4 rounded-[2rem] md:rounded-[3rem] border-2 border-pink-100 dark:border-gray-700 shadow-2xl flex justify-center items-center relative overflow-hidden">
+                
+                <!-- La imagen define su propio tamaño con topes máximos y forzamos el motor de nitidez del navegador -->
+                <img id="zoomed-image" src="" class="max-w-full max-h-[75vh] md:max-h-[85vh] w-auto h-auto object-contain rounded-xl" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges; transform: translateZ(0);">
+            </div>
+        </div>
+    </div>
 
 <!-- SCRIPT FIREBASE Y LÓGICA -->
     <script type="module">
@@ -667,11 +687,18 @@
                             </div>`;
                         }
 
+                        
                         tarjetasBuffer.push(`
                         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full relative border border-pink-50 dark:border-gray-700">
-                            <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center p-4 rounded-t-3xl">
-                                <img src="${prod.imagen_url}" loading="lazy" alt="${prod.nombre}" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                            
+                            <!-- CONTENEDOR DE IMAGEN CON CLIC Y LUPA -->
+                            <div class="h-56 overflow-hidden relative bg-white flex items-center justify-center p-4 rounded-t-3xl cursor-pointer group/img" onclick="window.abrirZoomImagen('${prod.imagen_url}')">
+                                <div class="absolute inset-0 bg-pink-100/0 group-hover/img:bg-pink-100/20 dark:group-hover/img:bg-black/30 z-10 transition-colors duration-300 flex items-center justify-center">
+                                    <span class="opacity-0 group-hover/img:opacity-100 text-3xl transform scale-50 group-hover/img:scale-100 transition-all duration-300 drop-shadow-md">🔍</span>
+                                </div>
+                                <img src="${prod.imagen_url}" loading="lazy" alt="${prod.nombre}" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500 relative z-0">
                             </div>
+
                             <div class="p-5 flex flex-col flex-grow relative">
                                 <div>
                                     <p class="text-[10px] font-bold tracking-widest text-gsiAccent uppercase mb-1">${pMarca}</p>
@@ -696,7 +723,6 @@
                 }
             }, 20);
         }
-
 async function descargarDatos() {
             try {
                 // 1. VERIFICAR CACHÉ (Memoria Inteligente del Navegador)
@@ -1117,6 +1143,39 @@ async function descargarDatos() {
             setTimeout(() => {
                 modal.classList.remove('flex');
                 modal.classList.add('hidden');
+            }, 300);
+        };
+        
+        // ==========================================
+        // CONTROL DEL VISOR DE IMÁGENES (ZOOM CUTE)
+        // ==========================================
+        window.abrirZoomImagen = function(imgUrl) {
+            const modal = document.getElementById('image-zoom-modal');
+            const content = document.getElementById('image-zoom-content');
+            document.getElementById('zoomed-image').src = imgUrl;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        };
+
+        window.cerrarZoomImagen = function() {
+            const modal = document.getElementById('image-zoom-modal');
+            const content = document.getElementById('image-zoom-content');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+                document.getElementById('zoomed-image').src = ''; // Limpiamos la imagen
             }, 300);
         };
 
