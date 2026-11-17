@@ -1162,10 +1162,9 @@ async function descargarDatos() {
         window.abrirZoomImagen = function(dataStr) {
             const modal = document.getElementById('image-zoom-modal');
             const content = document.getElementById('image-zoom-content');
-            const descContainer = document.getElementById('zoomed-text-container');
+            const descContainer = document.getElementById('zoomed-text-container'); // <-- ¡Corregido aquí!
             
             try {
-                // Extraemos todo el objeto del producto
                 const prod = JSON.parse(decodeURIComponent(dataStr));
                 
                 // Inyectar Imagen
@@ -1177,20 +1176,20 @@ async function descargarDatos() {
                 
                 // Validar Descripción
                 const descText = document.getElementById('zoomed-desc');
-                if (prod.descripcion && prod.descripcion.trim() !== "" && prod.descripcion !== "Sin descripción detallada por el momento.") {
-                    descText.innerHTML = prod.descripcion; // Usamos innerHTML por si el scraper manda saltos de línea (<br>)
+                const descripcionFinal = prod.descripcion || prod.desc || "";
+                
+                if (descripcionFinal && descripcionFinal.trim() !== "" && descripcionFinal !== "Sin descripción detallada por el momento.") {
+                    descText.innerHTML = descripcionFinal;
                 } else {
                     descText.innerHTML = "<span class='italic text-gray-400'>Este producto no cuenta con descripción detallada.</span>";
                 }
                 
                 descContainer.classList.remove('hidden');
             } catch(e) {
-                // Por si abren el zoom desde otro lado mandando solo la URL de la imagen (como un salvavidas)
                 document.getElementById('zoomed-image').src = dataStr;
                 descContainer.classList.add('hidden');
             }
             
-            // Animación de Entrada
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
