@@ -618,6 +618,11 @@
                         }
                     }
 
+                    // ✨ REGLA DE NEGOCIO: Si la marca activa es PEGAMENTO DUO, mostrar únicamente el producto estrella (PEG-9796)
+if (marcaActiva.toUpperCase() === 'PEGAMENTO DUO') {
+    productosFinales = productosFinales.filter(p => String(p.sku || '').trim().toUpperCase() === 'PEG-9796');
+}
+
                     if(productosFinales.length === 0) {
                         grid.innerHTML = '<div class="col-span-full py-16 flex flex-col items-center justify-center text-gray-400 dark:text-gray-500"><span class="text-5xl mb-4">💔</span><p class="font-serif text-xl">Uy, no tenemos productos con esa búsqueda.</p><p class="text-sm mt-2">¡Pronto nos llegará más inventario!</p></div>';
                         return;
