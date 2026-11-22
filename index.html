@@ -132,13 +132,40 @@
         </div>
     </div>
 
+<!-- MODAL FLOTANTE DE LA LUNITAS -->
+    <div id="luna-modal" class="fixed inset-0 z-[220] hidden items-center justify-center bg-pink-950/45 dark:bg-black/75 backdrop-blur-sm transition-opacity duration-300 p-4 opacity-0" onclick="window.cerrarModalLunita()">
+        <div class="bg-white/95 dark:bg-gray-900/95 rounded-[2rem] shadow-[0_20px_50px_rgba(251,111,146,0.35)] dark:shadow-[0_20px_50px_rgba(236,72,153,0.22)] max-w-md w-full p-7 md:p-8 relative border-2 border-pink-100 dark:border-gray-800 transform scale-95 transition-transform duration-300 text-center" id="luna-modal-content" onclick="event.stopPropagation()">
+            
+            <!-- Botón Cerrar (X) -->
+            <button type="button" onclick="window.cerrarModalLunita()" aria-label="Cerrar ventana" class="absolute top-4 right-4 bg-pink-50 dark:bg-gray-800 text-gsiAccent dark:text-pink-300 hover:bg-gsiAccent hover:text-white dark:hover:bg-pink-500 p-2 rounded-full shadow-sm border border-pink-200 dark:border-gray-700 transition-all hover:scale-110">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-pink-100 to-rose-50 dark:from-gray-800 dark:to-purple-950/60 border-2 border-pink-200 dark:border-pink-800/60 flex items-center justify-center mx-auto mb-4 shadow-inner">
+                <span class="text-3xl">🌙</span>
+            </div>
+
+            <h3 class="font-serif text-2xl font-bold text-gray-800 dark:text-white mb-3">
+                Gracias por estar aquí 🌙
+            </h3>
+
+            <div class="w-14 h-1 bg-gradient-to-r from-pink-300 via-gsiAccent to-pink-300 mx-auto rounded-full mb-4"></div>
+
+            <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-medium">
+                Esta lunita es para ti, que brillas incluso en tus días nublados. En <span class="font-bold text-gsiAccent dark:text-pink-400">G ♡ SI</span> siempre tendrás un lugarcito bonito ✨
+            </p>
+        </div>
+    </div>
+
 <!-- BARRA SUPERIOR FIJA -->
     <div class="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md shadow-sm border-b border-pink-100 dark:border-gray-800 px-6 py-3 flex justify-between items-center transition-all duration-500">
         
         <!-- Izquierda: Luna y Títulos -->
         <div class="flex items-center gap-2 md:gap-2.5 w-1/3">
-            <!-- BOTÓN SECRETO DE MAYOREO EN LA LUNA -->
-            <span onclick="window.toggleMayoreo()" class="text-2xl animate-bounce cursor-pointer hover:scale-110 transition-transform select-none" title="Modo Especial">🌙</span>
+            <!-- BOTÓN DE LUNITAS DE CONFIANZA -->
+            <span onclick="window.abrirModalLunita()" class="text-2xl animate-bounce cursor-pointer hover:scale-110 transition-transform select-none" title="Un lugarcito bonito para ti">🌙</span>
             
             <span class="font-serif font-bold tracking-wide text-lg text-gray-800 dark:text-white hidden xs:inline">GSI Makeup</span>
             <span class="text-xs text-gsiAccent uppercase font-sans tracking-widest bg-pink-50 dark:bg-gray-800 px-2 py-1 rounded-full border border-pink-200 dark:border-gray-700 hidden lg:inline-block">Catálogo</span>
@@ -463,7 +490,31 @@
         
         window.mostrarMayoreo = false; 
 
+        window.abrirModalLunita = function() {
+            const modal = document.getElementById('luna-modal');
+            const content = document.getElementById('luna-modal-content');
+            if (!modal || !content) return;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            }, 10);
+        };
 
+        window.cerrarModalLunita = function() {
+            const modal = document.getElementById('luna-modal');
+            const content = document.getElementById('luna-modal-content');
+            if (!modal || !content) return;
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        };
 
         window.toggleMayoreo = function() {
             window.mostrarMayoreo = !window.mostrarMayoreo;
