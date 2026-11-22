@@ -794,8 +794,8 @@ if (marcaActiva.toUpperCase() === 'PEGAMENTO DUO') {
 async function descargarDatos() {
             try {
                 // 1. VERIFICAR CACHÉ (Memoria Inteligente del Navegador)
-                const cacheData = localStorage.getItem('gsi_catalogo_cache_v2');
-                const cacheTime = localStorage.getItem('gsi_catalogo_timestamp_v2');
+                const cacheData = localStorage.getItem('gsi_catalogo_cache_v3');
+                const cacheTime = localStorage.getItem('gsi_catalogo_timestamp_v3');
                 const TIEMPO_EXPIRACION = 6 * 60 * 60 * 1000; // 6 horas en milisegundos
 
                 // Si el caché existe y tiene menos de 6 horas, cargar desde ahí
@@ -887,6 +887,19 @@ async function descargarDatos() {
                         // APLICAR EL MAPA MAESTRO
                         prod.grupo = mapaGrupos[prod.marca] || String(prod.grupo || 'basicos').toLowerCase().trim();
 
+                        // ✨ REGLA DE NEGOCIO: Reasignar productos de Yuya que vienen con SKU de Amor US
+                        const skusDeYuya = [
+                            'AMO-8611', 'AMO-8600', 'AMO-8597', 'AMO-8591', 'AMO-8588',
+                            'AMO-8585', 'AMO-8582', 'AMO-8579', 'AMO-8576', 'AMO-8558'
+                        ];
+                        const skuActual = String(prod.sku || '').trim().toUpperCase();
+                        if (skusDeYuya.includes(skuActual)) {
+                            prod.marca = 'YUYA';
+                        }
+
+                        // APLICAR EL MAPA MAESTRO
+                        prod.grupo = mapaGrupos[prod.marca] || String(prod.grupo || 'basicos').toLowerCase().trim();
+
                         todosLosProductos.push(prod);
                     } catch(err) {
                         console.warn("Producto omitido por error de formato en Firebase", err);
@@ -894,8 +907,8 @@ async function descargarDatos() {
                 });
                 
                 // 3. GUARDAR EL RESULTADO EN LA MEMORIA CACHÉ PARA FUTURAS VISITAS
-                localStorage.setItem('gsi_catalogo_cache_v2', JSON.stringify(todosLosProductos));
-                localStorage.setItem('gsi_catalogo_timestamp_v2', Date.now().toString());
+                localStorage.setItem('gsi_catalogo_cache_v3', JSON.stringify(todosLosProductos));
+                localStorage.setItem('gsi_catalogo_timestamp_v3', Date.now().toString());
                 
                 window.renderizarVista();
                 window.actualizarContadorCarrito();
